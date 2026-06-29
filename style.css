@@ -1,0 +1,303 @@
+/* ===================================================
+   TECHFEST — 3D Interactive Concept Site
+   Palette: near-black base, signal orange, electric cyan
+   Fonts: Anton (display) + JetBrains Mono (body/labels)
+=================================================== */
+
+:root{
+  --bg:        #07070b;
+  --bg-panel:  #0e0e16;
+  --accent:    #ff5722;   /* signal orange */
+  --accent2:   #00e5ff;   /* electric cyan */
+  --text:      #f3f3f6;
+  --text-dim:  #8d8d99;
+  --line:      rgba(255,255,255,0.08);
+
+  --font-display: 'Anton', sans-serif;
+  --font-body: 'JetBrains Mono', monospace;
+}
+
+*{ margin:0; padding:0; box-sizing:border-box; }
+
+html{ scroll-behavior:smooth; }
+
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--font-body);
+  overflow-x:hidden;
+}
+
+a{ text-decoration:none; color:inherit; }
+
+/* ---------- NAV ---------- */
+.nav{
+  position:fixed; top:0; left:0; right:0; z-index:100;
+  display:flex; justify-content:space-between; align-items:center;
+  padding:22px 6%;
+  backdrop-filter: blur(8px);
+  background:rgba(7,7,11,0.55);
+  border-bottom:1px solid var(--line);
+}
+.nav-logo{
+  font-family:var(--font-display);
+  font-size:1.3rem; letter-spacing:1px;
+}
+.nav-logo .dot{ color:var(--accent); }
+.nav-links{ display:flex; gap:28px; font-size:0.78rem; letter-spacing:1px; }
+.nav-links a{ color:var(--text-dim); transition:color 0.25s; }
+.nav-links a:hover{ color:var(--accent2); }
+
+.scroll-progress{
+  position:fixed; top:0; left:0; height:3px; width:0%;
+  background:linear-gradient(90deg, var(--accent), var(--accent2));
+  z-index:101; transition:width 0.1s linear;
+}
+
+/* ---------- SHARED SECTION RULES ---------- */
+.section{
+  position:relative;
+  min-height:100vh;
+  width:100%;
+  overflow:hidden;
+}
+
+.section-tag{
+  color:var(--accent2);
+  font-size:0.78rem; letter-spacing:2px;
+  margin-bottom:14px;
+}
+.section-title{
+  font-family:var(--font-display);
+  font-size:clamp(2.4rem, 6vw, 4.2rem);
+  line-height:1.05;
+  text-transform:uppercase;
+}
+.accent{ color:var(--accent); }
+
+.btn-primary{
+  display:inline-block;
+  margin-top:28px;
+  padding:14px 30px;
+  border:1px solid var(--accent);
+  color:var(--accent);
+  font-size:0.85rem; letter-spacing:1px;
+  border-radius:2px;
+  transition:all 0.3s ease;
+}
+.btn-primary:hover{
+  background:var(--accent);
+  color:var(--bg);
+  box-shadow:0 0 30px rgba(255,87,34,0.5);
+}
+
+/* ---------- decorative grid + glow orbs ---------- */
+.bg-grid{
+  position:absolute; inset:0;
+  background-image:
+    linear-gradient(var(--line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line) 1px, transparent 1px);
+  background-size:48px 48px;
+  mask-image:radial-gradient(ellipse 80% 60% at 50% 30%, black 40%, transparent 90%);
+  pointer-events:none;
+}
+.bg-grid-alt{ mask-image:radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 85%); }
+
+.orb{
+  position:absolute; border-radius:50%; filter:blur(90px);
+  pointer-events:none; opacity:0.35;
+}
+.orb-orange{ width:380px; height:380px; background:var(--accent); top:-100px; left:-100px; }
+.orb-cyan{ width:420px; height:420px; background:var(--accent2); bottom:-150px; right:-120px; }
+
+/* ================= HERO ================= */
+.hero{
+  display:flex; align-items:center; justify-content:center;
+  padding:0 6%;
+}
+.hero-content{ max-width:640px; z-index:2; }
+.hero-tag{ color:var(--text-dim); font-size:0.78rem; letter-spacing:2px; margin-bottom:18px; }
+.hero-title{
+  font-family:var(--font-display);
+  font-size:clamp(2.8rem, 8vw, 6rem);
+  line-height:1.0;
+  text-transform:uppercase;
+}
+.hero-title span{ display:block; }
+.hero-sub{
+  color:var(--text-dim);
+  font-size:1rem;
+  max-width:420px;
+  margin-top:20px;
+  line-height:1.6;
+}
+
+/* the 3D cube — real CSS 3D, not an illustration */
+.cube-stage{
+  position:absolute;
+  right:8%;
+  top:50%;
+  transform:translateY(-50%);
+  width:220px; height:220px;
+  perspective:900px;
+  z-index:2;
+}
+.cube{
+  width:100%; height:100%;
+  position:relative;
+  transform-style:preserve-3d;
+  /* base transform — JS overwrites this every frame with continuous rotation + mouse tilt */
+  transform:rotateX(-20deg) rotateY(35deg);
+}
+.cube .face{
+  position:absolute;
+  width:220px; height:220px;
+  display:flex; align-items:center; justify-content:center;
+  font-size:3.2rem;
+  background:rgba(15,15,22,0.85);
+  border:1px solid var(--accent2);
+  box-shadow: inset 0 0 40px rgba(0,229,255,0.15);
+  backface-visibility:visible;
+}
+.face.front{ transform: translateZ(110px); }
+.face.back { transform: translateZ(-110px) rotateY(180deg); }
+.face.right{ transform: rotateY(90deg) translateZ(110px); }
+.face.left { transform: rotateY(-90deg) translateZ(110px); }
+.face.top  { transform: rotateX(90deg) translateZ(110px); }
+.face.bottom{ transform: rotateX(-90deg) translateZ(110px); }
+
+
+.scroll-cue{
+  position:absolute; bottom:36px; left:50%; transform:translateX(-50%);
+  display:flex; flex-direction:column; align-items:center; gap:8px;
+  z-index:2;
+}
+.scroll-cue span{
+  width:1px; height:32px; background:var(--text-dim);
+  position:relative; overflow:hidden;
+}
+.scroll-cue span::after{
+  content:''; position:absolute; left:0; top:-100%; width:100%; height:100%;
+  background:var(--accent2);
+  animation:scrollline 1.8s ease-in-out infinite;
+}
+@keyframes scrollline{
+  0%{ top:-100%; } 50%{ top:0; } 100%{ top:100%; }
+}
+.scroll-cue p{ font-size:0.7rem; letter-spacing:2px; color:var(--text-dim); }
+
+/* ================= DOMAINS ================= */
+.domains{
+  background:var(--bg-panel);
+  padding:140px 6% 100px;
+}
+.section-head{ margin-bottom:60px; }
+.section-head.center{ text-align:center; }
+
+.card-grid{
+  display:grid;
+  grid-template-columns:repeat(3, 1fr);
+  gap:28px;
+  perspective:1200px;
+}
+
+.flip-card{
+  height:260px;
+  /* entrance state: tilted back & invisible until scrolled into view (set by JS adding .in-view) */
+  opacity:0;
+  transform:rotateX(40deg) translateY(40px);
+  transition:opacity 0.7s ease, transform 0.7s ease;
+}
+.flip-card.in-view{
+  opacity:1;
+  transform:rotateX(0) translateY(0);
+}
+
+.flip-inner{
+  position:relative;
+  width:100%; height:100%;
+  transform-style:preserve-3d;
+  transition:transform 0.6s cubic-bezier(.4,.2,.2,1);
+  cursor:pointer;
+}
+.flip-card.flipped .flip-inner{ transform:rotateY(180deg); }
+
+.flip-front, .flip-back{
+  position:absolute; inset:0;
+  backface-visibility:hidden;
+  border:1px solid var(--line);
+  border-radius:6px;
+  padding:28px;
+  display:flex; flex-direction:column; justify-content:center;
+  background:linear-gradient(160deg, rgba(255,255,255,0.03), transparent);
+}
+.flip-front{ align-items:flex-start; }
+.flip-back{
+  transform:rotateY(180deg);
+  border-color:var(--accent);
+  background:linear-gradient(160deg, rgba(255,87,34,0.08), transparent);
+}
+.card-icon{ font-size:2.4rem; margin-bottom:14px; }
+.card-title{
+  font-family:var(--font-display);
+  font-size:2rem;
+  letter-spacing:0.5px;
+  text-transform:uppercase;
+  color:#ffffff;
+  margin-bottom:8px;
+  line-height:1.1;
+  text-shadow: 0 0 18px rgba(255,87,34,0.55), 0 2px 0 rgba(0,0,0,0.4);
+}
+.flip-back .card-title{
+  color:var(--accent);
+  text-shadow: 0 0 18px rgba(255,87,34,0.35);
+}
+.card-hint{ color:var(--text-dim); font-size:0.72rem; letter-spacing:1px; margin-top:auto; }
+.flip-back p{ color:var(--text-dim); font-size:0.85rem; line-height:1.5; }
+
+/* ================= FINALE ================= */
+.finale{
+  padding:140px 6% 60px;
+  text-align:center;
+}
+.finale-note{ color:var(--text-dim); font-size:0.72rem; margin-top:10px; }
+
+.stats-row{
+  display:flex; justify-content:center; gap:70px;
+  margin:80px 0;
+  flex-wrap:wrap;
+}
+.stat{ z-index:2; }
+.stat-num{
+  font-family:var(--font-display);
+  font-size:3.4rem;
+  color:var(--accent2);
+  display:block;
+}
+.stat-label{ color:var(--text-dim); font-size:0.78rem; margin-top:6px; letter-spacing:0.5px; }
+
+.cta-block{ margin:60px 0 100px; }
+.cta-title{
+  font-family:var(--font-display);
+  font-size:clamp(2rem, 5vw, 3.4rem);
+  text-transform:uppercase;
+  line-height:1.1;
+}
+
+.footer{
+  border-top:1px solid var(--line);
+  padding:28px 0;
+  color:var(--text-dim);
+  font-size:0.75rem;
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 900px){
+  .card-grid{ grid-template-columns:repeat(2, 1fr); }
+  .cube-stage{ display:none; } /* keep mobile lean; cube is a desktop flourish */
+  .stats-row{ gap:40px; }
+}
+@media (max-width: 560px){
+  .card-grid{ grid-template-columns:1fr; }
+  .nav-links{ display:none; }
+}

@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TECHFEST — Ignite. Build. Compete.</title>
+
+<!-- Two distinctive fonts: Anton for huge display headlines, JetBrains Mono for that "engineering terminal" body feel -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Fixed nav: logo + scroll progress bar so the page feels alive immediately -->
+  <nav class="nav">
+    <div class="nav-logo">TECHFEST<span class="dot">.</span></div>
+    <div class="nav-links">
+      <a href="#hero">Home</a>
+      <a href="#domains">Domains</a>
+      <a href="#finale">Join</a>
+    </div>
+  </nav>
+  <div class="scroll-progress" id="scrollProgress"></div>
+
+  <!-- ============ SECTION 1 : HERO ============ -->
+  <section class="section hero" id="hero">
+
+    <!-- decorative background: grid + glow orbs, pure CSS, no images needed -->
+    <div class="bg-grid"></div>
+    <div class="orb orb-orange"></div>
+    <div class="orb orb-cyan"></div>
+
+    <div class="hero-content">
+      <p class="hero-tag">// ASIA'S LARGEST SCI-TECH FESTIVAL</p>
+      <h1 class="hero-title">
+        <span>IGNITE.</span>
+        <span>BUILD.</span>
+        <span class="accent">COMPETE.</span>
+      </h1>
+      <p class="hero-sub">Six domains. One stage. The festival where ideas get a body.</p>
+      <a href="#domains" class="btn-primary">Explore Domains ↓</a>
+    </div>
+
+    <!-- the interactive 3D object: a real CSS cube made of 6 faces, tilts toward the mouse -->
+    <div class="cube-stage" id="cubeStage">
+      <div class="cube" id="cube">
+        <div class="face front">⚙</div>
+        <div class="face back">🛰</div>
+        <div class="face right">💻</div>
+        <div class="face left">🔬</div>
+        <div class="face top">⚛</div>
+        <div class="face bottom">🎮</div>
+      </div>
+    </div>
+
+    <div class="scroll-cue">
+      <span></span>
+      <p>SCROLL</p>
+    </div>
+  </section>
+
+  <!-- ============ SECTION 2 : DOMAINS ============ -->
+  <section class="section domains" id="domains">
+    <div class="section-head">
+      <p class="section-tag">// 02 — DOMAINS</p>
+      <h2 class="section-title">Pick your<br>battlefield.</h2>
+    </div>
+
+    <div class="card-grid">
+
+      <div class="flip-card" data-tilt>
+        <div class="flip-inner">
+          <div class="flip-front">
+            <span class="card-icon">🤖</span>
+            <p class="card-title">Robotics</p>
+            <p class="card-hint">tap to view</p>
+          </div>
+          <div class="flip-back">
+            <p class="card-title">Robotics</p>
+            <p>Build machines that move, sense, and decide. Combat bots, line followers, autonomous arms.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="flip-card" data-tilt>
+        <div class="flip-inner">
+          <div class="flip-front">
+            <span class="card-icon">🧠</span>
+            <p class="card-title">AI &amp; ML</p>
+            <p class="card-hint">tap to view</p>
+          </div>
+          <div class="flip-back">
+            <p class="card-title">AI &amp; ML</p>
+            <p>Models that learn, predict, and occasionally surprise you. Bring your weirdest dataset.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="flip-card" data-tilt>
+        <div class="flip-inner">
+          <div class="flip-front">
+            <span class="card-icon">🌐</span>
+            <p class="card-title">Web Dev</p>
+            <p class="card-hint">tap to view</p>
+          </div>
+          <div class="flip-back">
+            <p class="card-title">Web Dev</p>
+            <p>Interfaces that don't just work — they feel like something. This page is the entry, in fact.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="flip-card" data-tilt>
+        <div class="flip-inner">
+          <div class="flip-front">
+            <span class="card-icon">🎮</span>
+            <p class="card-title">Gaming</p>
+            <p class="card-hint">tap to view</p>
+          </div>
+          <div class="flip-back">
+            <p class="card-title">Gaming &amp; VR</p>
+            <p>Worlds built from scratch. Game jams, esports arenas, and immersive builds.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="flip-card" data-tilt>
+        <div class="flip-inner">
+          <div class="flip-front">
+            <span class="card-icon">🔭</span>
+            <p class="card-title">Astronomy</p>
+            <p class="card-hint">tap to view</p>
+          </div>
+          <div class="flip-back">
+            <p class="card-title">Astronomy</p>
+            <p>Telescopes, star-mapping, and the kind of stargazing that comes with a leaderboard.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="flip-card" data-tilt>
+        <div class="flip-inner">
+          <div class="flip-front">
+            <span class="card-icon">🛠</span>
+            <p class="card-title">Innovation</p>
+            <p class="card-hint">tap to view</p>
+          </div>
+          <div class="flip-back">
+            <p class="card-title">Innovation</p>
+            <p>Open-domain hardware and product builds. If it solves a real problem, it belongs here.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============ SECTION 3 : FINALE / STATS / CTA ============ -->
+  <section class="section finale" id="finale">
+    <div class="bg-grid bg-grid-alt"></div>
+
+    <div class="section-head center">
+      <p class="section-tag">// 03 — THE NUMBERS</p>
+      <h2 class="section-title">Built by builders.</h2>
+      <p class="finale-note">*placeholder stats — swap in real Techfest figures before you submit</p>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat" data-count="6">
+        <span class="stat-num">0</span>
+        <p class="stat-label">Domains</p>
+      </div>
+      <div class="stat" data-count="48">
+        <span class="stat-num">0</span>
+        <p class="stat-label">Hours of build time</p>
+      </div>
+      <div class="stat" data-count="100">
+        <span class="stat-num">0</span>
+        <p class="stat-label">Events</p>
+      </div>
+      <div class="stat" data-count="1">
+        <span class="stat-num">0</span>
+        <p class="stat-label">Stage. Yours.</p>
+      </div>
+    </div>
+
+    <div class="cta-block">
+      <h2 class="cta-title">Stop reading.<br><span class="accent">Start building.</span></h2>
+      <a href="#hero" class="btn-primary">Back to Top ↑</a>
+    </div>
+
+    <footer class="footer">
+      <p>Concept site built for Techfest submission — designed &amp; coded from scratch.</p>
+    </footer>
+  </section>
+
+  <script src="script.js"></script>
+</body>
+</html>
