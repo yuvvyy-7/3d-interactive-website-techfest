@@ -237,6 +237,11 @@ a{ text-decoration:none; color:inherit; }
   border-color:var(--accent);
   background:linear-gradient(160deg, rgba(255,87,34,0.08), transparent);
 }
+
+.card-grid .flip-front {
+    border: 2px solid grey;
+}
+
 .card-icon{ font-size:2.4rem; margin-bottom:14px; }
 .card-title{
   font-family:var(--font-display);
@@ -301,3 +306,4 @@ a{ text-decoration:none; color:inherit; }
   .card-grid{ grid-template-columns:1fr; }
   .nav-links{ display:none; }
 }
+

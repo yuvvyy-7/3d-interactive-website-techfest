@@ -51,37 +51,50 @@ document.querySelectorAll('.flip-card').forEach(card => {
 });
 
 
-/* ---------- 4. HERO CUBE — ALWAYS SPINNING + MOUSE TILT ---------- */
-// The cube has two motions happening at once:
-//   1. A constant auto-rotation on the Y axis that NEVER stops, frame after frame.
-//   2. A smoothed tilt offset that follows wherever the mouse currently is.
-// Both are combined into one transform every animation frame.
+/* ---------- 4. HERO CUBE — IDLE SPIN vs HOVER CONTROL ---------- */
+// Two distinct modes:
+//   - Not hovering the cube: it spins on its own at a constant pace,
+//     and any tilt eases back to a neutral resting angle.
+//   - Hovering the cube: auto-spin PAUSES, and tilt is driven directly
+//     by where the pointer is over the cube itself.
 const cube = document.getElementById('cube');
+const cubeStage = document.getElementById('cubeStage');
 
-let autoRotation = 35;     // current base Y rotation, keeps climbing forever
-const autoSpeed = 0.18;    // degrees added per frame -> controls spin speed
+let isHovering = false;
 
-let targetTiltX = -20;     // where the mouse WANTS the tilt to be
+let autoRotation = 35;     // base Y rotation, only climbs while idle
+const autoSpeed = 0.38;    // degrees added per frame while idle
+
+let targetTiltX = -20;     // neutral resting tilt
 let targetTiltY = 0;
-let currentTiltX = -20;    // the tilt we actually render (eased toward target)
+let currentTiltX = -20;    // eased/rendered tilt
 let currentTiltY = 0;
-const ease = 0.06;         // lower = smoother/slower follow, higher = snappier
+const ease = 0.15;
 
-// Track mouse position across the whole window so the cube reacts
-// even when the cursor isn't directly over it.
-window.addEventListener('mousemove', (e) => {
-  const xPercent = (e.clientX / window.innerWidth) - 0.5;   // -0.5 .. 0.5
-  const yPercent = (e.clientY / window.innerHeight) - 0.5;  // -0.5 .. 0.5
+cubeStage.addEventListener('mouseenter', () => { isHovering = true; });
+cubeStage.addEventListener('mouseleave', () => { isHovering = false; });
 
-  targetTiltY = xPercent * 50;   // left/right mouse movement -> extra Y rotation
-  targetTiltX = -20 - yPercent * 40; // up/down mouse movement -> X tilt, offset from base -20deg
+cubeStage.addEventListener('mousemove', (e) => {
+  if (!isHovering) return;
+  // position of the pointer relative to the cube stage itself, not the whole window
+  const rect = cubeStage.getBoundingClientRect();
+  const xPercent = ((e.clientX - rect.left) / rect.width) - 0.5;   // -0.5 .. 0.5
+  const yPercent = ((e.clientY - rect.top) / rect.height) - 0.5;   // -0.5 .. 0.5
+
+  targetTiltY = xPercent * 80;          // direct left/right control
+  targetTiltX = -20 - yPercent * 70;    // direct up/down control
 });
 
 function animateCube() {
-  // continuous spin, frame after frame, regardless of the mouse
-  autoRotation += autoSpeed;
+  if (isHovering) {
+    // hovering: auto-spin is frozen, tilt is fully pointer-driven (eased target above)
+  } else {
+    // idle: keep spinning forever at a constant pace, tilt relaxes back to neutral
+    autoRotation += autoSpeed;
+    targetTiltX = -20;
+    targetTiltY = 0;
+  }
 
-  // ease the rendered tilt toward wherever the mouse currently targets it
   currentTiltX += (targetTiltX - currentTiltX) * ease;
   currentTiltY += (targetTiltY - currentTiltY) * ease;
 
